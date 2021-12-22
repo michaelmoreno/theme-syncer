@@ -5,8 +5,24 @@ import random
 
 working_dir = sys.path[0]
 
+
+def set_kb_rgb(theme):
+    os.system(f'sudo {cfg.rgb_controller} {cfg.themes[f"theme_{theme}"]["kb_rgb"]}')
+
+
+def set_wallpaper(theme):
+    os.system(f'{cfg.wallpaper_controller} {cfg.themes[f"theme_{theme}"]["wallpaper"]}')
+
+
+def set_apps(theme):
+    for app in cfg.themes[f"theme_{theme}"]["app_themes"]:
+        os.system(cfg.app_commands[app].format(cfg.themes[f"theme_{theme}"]["app_themes"][app]))
+
+
 def set_theme(theme):
-    os.system(f'{cfg.wallpaper_controller} {cfg.themes[f"theme_{theme}"]["wallpaper"]} && sudo {cfg.rgb_controller} {cfg.themes[f"theme_{theme}"]["kb_rgb"]}')
+    set_wallpaper(theme)
+    set_kb_rgb(theme)
+    set_apps(theme)
 
 
 def cycle_theme():
